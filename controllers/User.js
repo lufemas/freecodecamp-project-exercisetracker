@@ -1,12 +1,16 @@
-const mongoose = require('mongoose');
-const userModel = require('../models/User');
+const mongoose = require("mongoose");
+const userModel = require("../models/User");
 
 const add = async (name) => {
   const user = new userModel({
-    username: name
+    username: name,
   });
-  console.log('user new: ', user)
+  console.log("user new: ", user);
   return await user.save();
-}
+};
 
-module.exports = {add};
+const all = async (name) => {
+  return await userModel.find({});
+};
+
+module.exports = { add, all };
