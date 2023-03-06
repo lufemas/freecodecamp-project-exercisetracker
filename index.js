@@ -34,7 +34,8 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
   req.body._id = req.params._id;
   console.log("body: ", req.body);
   const newExercise = await exerciseController.add(req.body);
-  res.json(newExercise);
+  const user = await userModel.findOne(newExercise._id);
+  res.json(user);
 });
 
 app.get("/", (req, res) => {
