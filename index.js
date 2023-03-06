@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const userController = require("./controllers/User");
 require("dotenv").config();
-console.log(process.env.MONGO_URI);
 mongoose
   .connect(process.env.MONGO_URI)
   .then((result) => {
@@ -23,8 +22,8 @@ app.post("/api/users", async (req, res) => {
 });
 
 app.post("/api/users/:_id/exercises", async (req, res) => {
-  const newUser = await userController.add(req.body.username);
-  res.json(newUser);
+  // const newUser = await userController.add(req.body.username);
+  // res.json(newUser);
 });
 
 app.get("/", (req, res) => {
