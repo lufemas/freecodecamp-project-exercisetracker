@@ -13,10 +13,10 @@ const all = async (name) => {
   return await userModel.find({});
 };
 
-const findOne = async (_id) => {
-  console.log("findOne by id: ", _id);
+const findOne = async (properties) => {
+  console.log("find by: ", properties);
 
-  return await userModel.find({ _id });
+  return await userModel.findOne(properties);
 };
 
 module.exports = { add, all, findOne };
