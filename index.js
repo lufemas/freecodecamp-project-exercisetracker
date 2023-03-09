@@ -4,7 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const userController = require("./controllers/User");
-const exerciseController = require("./controllers/Exercise");
+const logController = require("./controllers/Log");
 require("dotenv").config();
 mongoose
   .connect(process.env.MONGO_URI, {
@@ -36,14 +36,14 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
   console.log("POST /api/users/:_id/exercises ");
   req.body._id = req.params._id;
   console.log("body: ", req.body);
-  const newExercise = await exerciseController.add(req.body);
+  const log = await logController.log(req.body);
   // if (!newExercise) {
   //   res.status(404).json({ error: "user does not exist" });
   // }
-  const user = await userController.findOne({ _id: newExercise._id });
-  newExercise.username = user.username;
-  console.log("username:", { ...newExercise._doc, test: "test" });
-  res.json({ ...newExercise._doc, ...user._doc });
+  const user = await userController.findOne({ _id: log._id });
+  // log.username = user.username;
+  console.log("username:", log);
+  res.json(log);
 });
 
 app.get("/", (req, res) => {
