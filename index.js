@@ -37,12 +37,30 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
   req.body._id = req.params._id;
   console.log("body: ", req.body);
   const log = await logController.log(req.body);
-  // if (!newExercise) {
-  //   res.status(404).json({ error: "user does not exist" });
-  // }
-  const user = await userController.findOne({ _id: log._id });
-  // log.username = user.username;
-  console.log("username:", log);
+  res.json(log);
+});
+
+app.get("/api/users/:_id/logs", async (req, res) => {
+  const { from, to, limit } = req.query;
+  console.log("GET /api/users/:_id/logs");
+  const log = await logController.findById(req.params._id);
+
+  log.log = log.log.filter( exercise => {
+    let result = true;
+    if(from){
+      result = result && Date.parse(from) <= Date.parse(exercise.date);
+    }
+
+    if(to){
+      result = result && Date.parse(to) >= Date.parse(exercise.date);
+    }
+
+    return result;
+  })
+
+  if(limit) {
+    log.log = log.log.slice(0, parseInt(limit));
+  }
   res.json(log);
 });
 
