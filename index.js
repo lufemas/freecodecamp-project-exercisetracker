@@ -45,20 +45,20 @@ app.get("/api/users/:_id/logs", async (req, res) => {
   console.log("GET /api/users/:_id/logs");
   const log = await logController.findById(req.params._id);
 
-  log.log = log.log.filter( exercise => {
+  log.log = log.log.filter((exercise) => {
     let result = true;
-    if(from){
+    if (from) {
       result = result && Date.parse(from) <= Date.parse(exercise.date);
     }
 
-    if(to){
+    if (to) {
       result = result && Date.parse(to) >= Date.parse(exercise.date);
     }
 
     return result;
-  })
+  });
 
-  if(limit) {
+  if (limit) {
     log.log = log.log.slice(0, parseInt(limit));
   }
   res.json(log);
