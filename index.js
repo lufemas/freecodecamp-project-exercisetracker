@@ -61,6 +61,7 @@ app.get("/api/users/:_id/logs", async (req, res) => {
   if (limit) {
     log.log = log.log.slice(0, parseInt(limit));
   }
+  log.log.map( exercise => exercise.date = new Date(exercise.date).toDateString())
   res.json(log);
 });
 
